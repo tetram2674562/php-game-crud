@@ -17,5 +17,19 @@
     },
     "require": {
         "behat/gherkin": "~4.12.0"
+    },
+    "scripts": {
+        "start": [
+            "@start:linux",
+            "@start:windows"
+        ],
+        "start:linux": [
+            "Composer\\Config::disableProcessTimeout",
+            "bin/linux/run-server.sh"
+        ],
+        "start:windows": [
+            "Composer\\Config::disableProcessTimeout",
+            "bin/windows/run-server.bat"
+        ]
     }
 }
