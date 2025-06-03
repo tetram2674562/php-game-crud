@@ -30,6 +30,12 @@
         "start:windows": [
             "Composer\\Config::disableProcessTimeout",
             "bin/windows/run-server.bat"
-        ]
+        ],
+        "test:cs:linux": "bin/linux/test.sh",
+        "fix:cs:linux": "bin/linux/fix.sh",
+        "test:cs:windows": "bin/windows/test.bat",
+        "fix:cs:windows": "bin/windows/fix.bat",
+        "test:cs": "@test:cs:linux",
+        "fix:cs": "@fix:cs:linux"
     }
 }
