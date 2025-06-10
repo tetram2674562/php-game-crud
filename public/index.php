@@ -8,18 +8,19 @@ use Html\AppWebPage;
 
 // creation of the webpage
 $appWebPage = new AppWebPage("Jeux vidéos");
-// creation of the subtitle
-$appWebPage->appendContent("<h2 class='subtitle'>Catégorie</h2>");
-$appWebPage->appendContent("<h2 class='subtitle'>Genre</h2>");
 // Creation of categories
-$appWebPage->appendContent("<div class='categories'>");
+$appWebPage->appendContent("<div class='categories'>\n");
+// creation of the subtitle for category
+$appWebPage->appendContent("<h2 class='subtitle'>Catégorie</h2>\n");
 foreach (CategoryCollection::findAll() as $category) {
-    $appWebPage->appendContent("<a href='' class='category'></a>");
+    $appWebPage->appendContent("<a href='categorie.php?categoryId={$category->getId()}' class='category'>{$category->getDescription()}</a>\n");
 }
 // Creation of genres
-$appWebPage->appendContent("</div>\n\t\t\t<div class='genres'>");
+$appWebPage->appendContent("</div>\n\t\t\t<div class='genres'>\n");
+// creation of the subtitle for genre
+$appWebPage->appendContent("<h2 class='subtitle'>Genre</h2>\n");
 foreach (GenreCollection::findAll() as $genre) {
-    $appWebPage->appendContent("<a href='' class='genre'></a>");
+    $appWebPage->appendContent("<a href='genre.php?genreId={$genre->getId()}' class='genre'>{$genre->getDescription()}</a>\n");
 }
 // Closing every the box
 $appWebPage->appendContent("</div>");
