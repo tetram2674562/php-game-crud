@@ -37,4 +37,22 @@ class Category
         }
         return $response;
     }
+
+    /** Get the id of the category
+     *
+     * @return int The id of the category
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /** Get the description of the category
+     *
+     * @return string The description of the category
+     */
+    public function getDesc(): string
+    {
+        return $this->desc;
+    }
 }
