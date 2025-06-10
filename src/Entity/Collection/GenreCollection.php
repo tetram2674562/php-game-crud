@@ -18,7 +18,7 @@ class GenreCollection
     {
         // Get all genre from the genre table
         $stmt = MyPdo::getInstance()->prepare(<<< 'SQL'
-            SELECT *
+            SELECT id,description
             FROM genre
         SQL);
         // Set the fetch mode

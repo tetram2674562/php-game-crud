@@ -20,8 +20,8 @@ class CategoryCollection
     {
         $request = MyPdo::getInstance()->prepare(
             <<<SQL
-            SELECT * 
-            FROM game_category
+            SELECT id,description 
+            FROM category;
             SQL
         );
         $request->execute();
