@@ -23,3 +23,4 @@ foreach (GenreCollection::findAll() as $genre) {
 }
 // Closing every the box
 $appWebPage->appendContent("</div>");
+echo $appWebPage->toHTML();
