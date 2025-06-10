@@ -34,4 +34,21 @@ class Genre
         }
         return $result;
     }
+    /** Get the id of the genre
+     *
+     * @return int The id of the genre
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /** Get the description of the genre
+     *
+     * @return string The description of the genre
+     */
+    public function getDesc(): string
+    {
+        return $this->desc;
+    }
 }
