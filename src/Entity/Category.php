@@ -31,10 +31,8 @@ class Category
         );
         $request->bindValue(':id', $id);
         $request->setFetchMode(PDO::FETCH_CLASS, Category::class);
-        // request response
-        $response = $request->fetch();
         // if the request find no category generate an exception
-        if (!$response) {
+        if (($response = $request->fetch()) === false) {
             throw new EntityNotFoundException();
         }
         return $response;
