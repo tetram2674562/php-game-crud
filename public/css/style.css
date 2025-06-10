@@ -1,0 +1,23 @@
+.header, a, .footer {
+    border: black 1px solid;
+        gap: 2em;
+}
+
+.genre, .category {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+}
+
+@media mobile and (max-width: 748px) {
+
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
