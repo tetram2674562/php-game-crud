@@ -16,7 +16,8 @@
         "codeception/module-db": "^1"
     },
     "require": {
-        "behat/gherkin": "~4.12.0"
+        "behat/gherkin": "~4.12.0",
+      "ext-pdo": "*"
     },
     "scripts": {
         "start": [
