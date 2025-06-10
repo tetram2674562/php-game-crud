@@ -1,5 +1,6 @@
 <?php
-// Albin Blachon  
+
+// Albin Blachon
 
 declare(strict_types=1);
 
@@ -17,7 +18,8 @@ class CategoryCollection
      */
     public static function findAll(): array
     {
-        $request = MyPdo::getInstance()->prepare(<<<SQL
+        $request = MyPdo::getInstance()->prepare(
+            <<<SQL
             SELECT * 
             FROM game_category
             SQL

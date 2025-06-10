@@ -1,5 +1,6 @@
 <?php
-// Albin Blachon  
+
+// Albin Blachon
 
 declare(strict_types=1);
 
@@ -23,7 +24,8 @@ class Category
     public static function findById(int $id): Category
     {
         // request prepare
-        $request = MyPdo::getInstance()->prepare(<<<SQL
+        $request = MyPdo::getInstance()->prepare(
+            <<<SQL
             SELECT * 
             FROM game_category
             WHERE gameId = :id
@@ -36,5 +38,23 @@ class Category
             throw new EntityNotFoundException();
         }
         return $response;
+    }
+
+    /** Get the id of the category
+     *
+     * @return int The id of the category
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /** Get the description of the category
+     *
+     * @return string The description of the category
+     */
+    public function getDesc(): string
+    {
+        return $this->desc;
     }
 }
