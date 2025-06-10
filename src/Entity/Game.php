@@ -50,4 +50,107 @@ class Game
         }
         return $response;
     }
+
+    /** Get the id of the game
+     *
+     * @return int id of the game
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /** Get the name of the game
+     *
+     * @return string The name of the game
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /** Get the game release date (year)
+     *
+     * @return int The game release date (year)
+     */
+    public function getReleaseYear(): int
+    {
+        return $this->releaseYear;
+    }
+
+    /** Get a short description of the game
+     *
+     * @return string A short description of the game
+     */
+    public function getShortDescription(): string
+    {
+        return $this->shortDescription;
+    }
+
+    /** Get the price of the game
+     *
+     * @return int The price of the game
+     */
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+    /** Get if the game is available on windows : 1 if yes 0 if no
+     *
+     * @return int if the game is available on windows
+     */
+    public function getWindows(): int
+    {
+        return $this->windows;
+    }
+
+
+    /** Get if the game is available on linux : 1 if yes 0 if no
+     *
+     * @return int if the game is available on linux
+     */
+    public function getLinux(): int
+    {
+        return $this->linux;
+    }
+
+
+    /** Get if the game is available on macOS : 1 if yes 0 if no
+     *
+     * @return int if the game is available on macOS
+     */
+    public function getMac(): int
+    {
+        return $this->mac;
+    }
+
+
+    /** Get the metacritic score of the game
+     *
+     * @return int the metracritic score of the game
+     */
+    public function getMetacritic(): int
+    {
+        return $this->metacritic;
+    }
+
+
+    /** Get the developer id of the game
+     *
+     * @return int get the developer id of the game
+     */
+    public function getDeveloperId(): int
+    {
+        return $this->developerId;
+    }
+
+    /** Get the poster id of the game
+     *
+     * @return int The poster id of the game
+     */
+    public function getPosterId(): int
+    {
+        return $this->posterId;
+    }
 }
