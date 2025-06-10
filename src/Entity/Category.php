@@ -13,7 +13,7 @@ use PDO;
 class Category
 {
     private int $id;
-    private string $desc;
+    private string $description;
 
     /** Search the category by an Id.
      *
@@ -53,8 +53,8 @@ class Category
      *
      * @return string The description of the category
      */
-    public function getDesc(): string
+    public function getDescription(): string
     {
-        return $this->desc;
+        return $this->description;
     }
 }

@@ -11,7 +11,7 @@ use PDO;
 class Genre
 {
     private int $id;
-    private string $desc;
+    private string $description;
 
     /** A function that allows to find a genre by It's ID
      *
@@ -47,8 +47,8 @@ class Genre
      *
      * @return string The description of the genre
      */
-    public function getDesc(): string
+    public function getDescription(): string
     {
-        return $this->desc;
+        return $this->description;
     }
 }
