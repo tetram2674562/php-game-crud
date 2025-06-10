@@ -8,7 +8,7 @@ use Html\AppWebPage;
 
 // creation of the webpage
 $appWebPage = new AppWebPage("Jeux vidéos");
-// creation of the title
+// creation of the subtitle
 $appWebPage->appendContent("<h2 class='subtitle'>Catégorie</h2>");
 $appWebPage->appendContent("<h2 class='subtitle'>Genre</h2>");
 // Creation of categories
