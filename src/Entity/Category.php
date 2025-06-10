@@ -1,5 +1,6 @@
 <?php
-// Albin Blachon  
+
+// Albin Blachon
 
 declare(strict_types=1);
 
@@ -23,7 +24,8 @@ class Category
     public static function findById(int $id): Category
     {
         // request prepare
-        $request = MyPdo::getInstance()->prepare(<<<SQL
+        $request = MyPdo::getInstance()->prepare(
+            <<<SQL
             SELECT * 
             FROM game_category
             WHERE gameId = :id
