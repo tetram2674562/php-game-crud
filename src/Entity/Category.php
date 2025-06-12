@@ -26,12 +26,13 @@ class Category
         // request prepare
         $request = MyPdo::getInstance()->prepare(
             <<<SQL
-            SELECT * 
-            FROM game_category
-            WHERE gameId = :id
+            SELECT *
+            FROM category
+            WHERE id = :id
             SQL
         );
         $request->bindValue(':id', $id);
+        $request->execute();
         $request->setFetchMode(PDO::FETCH_CLASS, Category::class);
         // if the request find no category generate an exception
         if (($response = $request->fetch()) === false) {
