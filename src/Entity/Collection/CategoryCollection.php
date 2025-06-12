@@ -39,15 +39,14 @@ class CategoryCollection
     public static function getCategoriesFromGameId(int $id): array
     {
         // prepare request
-        $stmt = MyPdo::getInstance()->prepare(
-            <<<SQL
+        $stmt = MyPdo::getInstance()->prepare(<<<SQL
             SELECT *
             FROM category
             WHERE id IN (SELECT categoryId
                          FROM game_category c 
                             INNER JOIN game g ON (c.gameId = g.id)
-                         WHERE g.id = :id)
-             SQL
+                         WHERE g.id = :id)  
+            SQL
         );
         $stmt->bindValue(":id", $id);
         $stmt->execute();
