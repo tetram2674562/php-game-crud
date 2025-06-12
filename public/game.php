@@ -72,7 +72,7 @@ try {
                                     <div class="icons">
                                         {$icons}
                                     </div>
-                                    <p>{$price}</p>
+                                    <p>{$year}</p>
                                 </div>
                                 <p>{$dev}</p>
                             </div>
