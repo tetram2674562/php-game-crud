@@ -13,7 +13,6 @@ body {
 .header, a, .footer {
     border: black 1px solid;
     gap: 2em;
-    flex-grow: 1;
 }
 
 .header, .footer{
@@ -30,14 +29,41 @@ a{
 }
 
 .content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 80%;
+}
+
+.index-content{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    overflow-y: scroll;
-    overflow-x: hidden;
     gap: 0.4vw;
-    height: 80%;
 }
+
+.__content{
+    display:flex;
+    flex-direction: column;
+    gap:0.4vw;
+}
+
+.detail:nth-child(odd){
+    display: flex;
+    flex-direction: row;
+}
+
+.detail:nth-child(even){
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.detail > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+p:first-child
 
 @media screen and (max-width: 748px) {
 

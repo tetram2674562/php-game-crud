@@ -18,17 +18,19 @@ try {
     $appWebPage = new AppWebPage("Jeux Vidéo : {$category->getDescription()}");
     // Get all the game for this category
     $games = GameCollection::findGameByCategoryId($category->getId());
+    $appWebPage->appendContent("<div class='__content'>");
     // For each games
     foreach ($games as $game) {
         $appWebPage->appendContent(
             <<<HTML
-        <a href="game.php?gameId={$game->getId()}">
-            <img src="poster.php?posterId={$game->getPosterId()}" alt="{$game->getName()}">
-            <div>
-                <p>{$game->getName()} ({$game->getReleaseYear()})</p>
-                <p>{$game->getShortDescription()}</p>
-            </div>
-        </a>
+                    
+                        <a class='detail' href="game.php?gameId={$game->getId()}">
+                            <img src="poster.php?posterId={$game->getPosterId()}" alt="{$game->getName()}">
+                            <div>
+                                <h3>{$game->getName()} ({$game->getReleaseYear()})</h3>
+                                <p>{$game->getShortDescription()}</p>
+                            </div>
+                        </a>
         HTML
         );
     }
