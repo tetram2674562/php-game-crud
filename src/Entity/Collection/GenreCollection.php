@@ -45,7 +45,7 @@ class GenreCollection
                          FROM game_genre ge 
                             INNER JOIN game ga ON (ge.gameId = ga.id)
                          WHERE ga.id = :id)
-             SQL
+            SQL
         );
         $stmt->bindValue(":id", $id);
         $stmt->execute();
