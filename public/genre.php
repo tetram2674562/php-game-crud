@@ -19,11 +19,12 @@ try {
     $appWebPage = new AppWebPage("Jeux Vidéo : {$genre->getDescription()}");
     // Get all the game for this genre
     $games = GameCollection::findGameByGenreId($genre->getId());
+    $appWebPage->appendContent("<div class='__content'>");
     // For each games
     foreach ($games as $game) {
         $appWebPage->appendContent(
             <<<HTML
-        <a href="game.php?gameId={$game->getId()}">
+        <a class='detail' href="game.php?gameId={$game->getId()}">
             <img src="poster.php?posterId={$game->getPosterId()}" alt="{$game->getName()}">
             <div>
                 <p>{$game->getName()} ({$game->getReleaseYear()})</p>
@@ -33,6 +34,7 @@ try {
         HTML
         );
     }
+    $appWebPage->appendContent("</div>");
     echo $appWebPage->toHTML();
 } catch (EntityNotFoundException) {
     http_response_code(404);
