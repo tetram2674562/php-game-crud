@@ -37,7 +37,7 @@ class Poster
      * @return Poster The poster founded.
      * @throws EntityNotFoundException If no poster founded.
      */
-    public function findById(int $id): Poster
+    public static function findById(int $id): Poster
     {
         // Prepare request
         $stmt = MyPdo::getInstance()->prepare(
