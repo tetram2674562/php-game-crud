@@ -21,7 +21,7 @@ class Game
     private int $linux;
     private int $mac;
     private ?int $metacritic;
-    private int $developerId;
+    private ?int $developerId;
     private int $posterId;
 
     /** Find a game by an Id.
