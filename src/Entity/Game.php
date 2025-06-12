@@ -20,7 +20,7 @@ class Game
     private int $windows;
     private int $linux;
     private int $mac;
-    private int $metacritic;
+    private ?int $metacritic;
     private int $developerId;
     private int $posterId;
 
@@ -130,7 +130,7 @@ class Game
      *
      * @return int the metracritic score of the game
      */
-    public function getMetacritic(): int
+    public function getMetacritic(): ?int
     {
         return $this->metacritic;
     }
