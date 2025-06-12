@@ -55,13 +55,21 @@ class Game
         return $response;
     }
 
-    /** Get the id of the game
-     *
-     * @return int id of the game
-     */
-    public function getId(): int
+    public static function create(string $name, int $releaseYear, string $shortDescription, int $price, int $windows, int $macos, int $linux, int $posterId, int $developerId = null, int $id = null, int $metacritic = null): Game
     {
-        return $this->id;
+        $game = new Game();
+        $game->setName($name);
+        $game->setReleaseYear($releaseYear);
+        $game->setShortDescription($shortDescription);
+        $game->setPrice($price);
+        $game->setLinux($linux);
+        $game->setMac($macos);
+        $game->setWindows($windows);
+        $game->setPosterId($posterId);
+        $game->setDeveloperId($developerId);
+        $game->setId($id);
+        $game->setMetacritic($metacritic);
+        return $game;
     }
 
     /** Get the name of the game
