@@ -4,9 +4,10 @@
 
 declare(strict_types=1);
 
-namespace Entity;
+namespace Entity\Collection;
 
 use Database\MyPdo;
+use Entity\Game;
 use Exception\EntityNotFoundException;
 use PDO;
 
@@ -18,7 +19,7 @@ class GameCollection
      * @return Game[] The game list
      * @throws EntityNotFoundException If there is no result.
      */
-    public static function findGameByCollectionId(int $categoryId): array
+    public static function findGameByCategoryId(int $categoryId): array
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<<SQL
