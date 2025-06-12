@@ -316,6 +316,10 @@ class Game
         $this->id = $id;
     }
 
+    /** Insert the current game into the database
+     *
+     * @return $this The game
+     */
     public function insert() : Game
     {
         $stmt = MyPdo::getInstance()->prepare(
@@ -360,6 +364,10 @@ class Game
         return $this;
     }
 
+    /** Update all information of the game into the database.
+     *
+     * @return $this The game
+     */
     public function update() : Game
     {
         $stmt = MyPdo::getInstance()->prepare(
