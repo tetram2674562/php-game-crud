@@ -1,9 +1,14 @@
 <?php
-// Albin Blachon  
+
+// Albin Blachon
 
 declare(strict_types=1);
 
 namespace Entity;
+
+use Database\MyPdo;
+use Exception\EntityNotFoundException;
+use PDO;
 
 class Poster
 {
@@ -26,4 +31,29 @@ class Poster
         return $this->id;
     }
 
+    /** Find a poster by his id.
+     *
+     * @param int $id The poster id.
+     * @return Poster The poster founded.
+     * @throws EntityNotFoundException If no poster founded.
+     */
+    public function findById(int $id): Poster
+    {
+        // Prepare request
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<SQL
+            SELECT *
+            FROM poster
+            WHERE id = :posterId
+            SQL
+        );
+        $stmt->bindValue(':posterId', $id);
+        $stmt->execute();
+        // Fetch the restult
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Poster::class);
+        if (($result = $stmt->fetch()) === false) {
+            throw new EntityNotFoundException();
+        }
+        return $result;
+    }
 }
