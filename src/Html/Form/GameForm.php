@@ -24,9 +24,9 @@ class GameForm
 
     /** Get the game of this form
      *
-     * @return Game The game
+     * @return ?Game The game
      */
-    public function getGame(): Game
+    public function getGame(): ?Game
     {
         return $this->game;
     }
