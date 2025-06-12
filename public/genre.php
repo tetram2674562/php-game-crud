@@ -27,7 +27,7 @@ try {
         <a class='detail' href="game.php?gameId={$game->getId()}">
             <img src="poster.php?posterId={$game->getPosterId()}" alt="{$appWebPage->escapeString($game->getName())}">
             <div>
-                <p>{$appWebPage->escapeString($game->getName())} ({$game->getReleaseYear()})</p>
+                <h3>{$appWebPage->escapeString($game->getName())} ({$game->getReleaseYear()})</h3>
                 <p>{$appWebPage->escapeString($game->getShortDescription())}</p>
             </div>
         </a>

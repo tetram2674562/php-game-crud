@@ -3,29 +3,42 @@ html, body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1vw;
+    background-color: #1b2838;
+    gap:0.4vw;
 }
 
 body {
     overflow: hidden;
 }
 
-.header, a, .footer {
-    border: black 1px solid;
-    gap: 2em;
+.header, .footer{
+    background-color: #171d25;
 }
 
-.header, .footer{
-    text-align: center;
+.footer{
+    gap:1em;
+    height: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+.header, .footer, h3{
+    text-align: center;
+    color: #536f86;
+}
+
 a{
+    border: black 1px solid;
     padding: 0.2vw;
+    color: #78899b;
+    text-decoration: none;
 }
 .categories, .genres {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     gap: 0.5vw;
+    color: #536f86;
 }
 
 .content {
@@ -47,40 +60,43 @@ a{
     gap:0.4vw;
 }
 
-.detail:nth-child(odd){
-    display: flex;
-    flex-direction: row;
-}
-
-.detail:nth-child(even){
-    display:flex;
-    flex-direction: row-reverse;
-}
-
-.detail > div{
+.detail > div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    flex-grow: 1;
+    align-items: center;
 }
 
-p:first-child
+.detail {
+    display: flex;
+    background-color: #16202d;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1vw;
+}
+
+@media screen and (min-width: 749px) {
+
+
+    .detail:nth-child(odd) {
+        flex-direction: row;
+    }
+
+    .detail:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+}
 
 @media screen and (max-width: 748px) {
 
-    html, body {
-        height: 100%;
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        overflow-y: scroll;
-        height: 85%;
-    }
-
-    .genre, .category {
-        display: flex;
+    .index-content {
         flex-direction: column;
     }
+
+    .detail{
+        flex-direction: column;
+    }
+
 }

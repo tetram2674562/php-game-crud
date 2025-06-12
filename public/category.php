@@ -34,6 +34,7 @@ try {
         HTML
         );
     }
+    $appWebPage->appendContent("\n\t\t\t</div>");
     echo $appWebPage->toHTML();
 } catch (EntityNotFoundException) {
     http_response_code(404);
