@@ -316,7 +316,7 @@ class Game
         $this->id = $id;
     }
 
-    public function insert()
+    public function insert() : Game
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<< 'SQL'
@@ -360,7 +360,7 @@ class Game
         return $this;
     }
 
-    public function update()
+    public function update() : Game
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<< 'SQL'
