@@ -13,7 +13,7 @@ $appWebPage->appendContent("<div class='categories'>\n");
 // creation of the subtitle for category
 $appWebPage->appendContent("<h2 class='subtitle'>Catégorie</h2>\n");
 foreach (CategoryCollection::findAll() as $category) {
-    $appWebPage->appendContent("<a href='categorie.php?categoryId={$category->getId()}' class='category'>{$category->getDescription()}</a>\n");
+    $appWebPage->appendContent("<a href='category.php?categoryId={$category->getId()}' class='category'>{$category->getDescription()}</a>\n");
 }
 // Creation of genres
 $appWebPage->appendContent("</div>\n\t\t\t<div class='genres'>\n");
