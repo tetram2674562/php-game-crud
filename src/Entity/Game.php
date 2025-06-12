@@ -55,6 +55,21 @@ class Game
         return $response;
     }
 
+    /** Allow to create a new game from scratch
+     *
+     * @param string $name The name of the game
+     * @param int $releaseYear The year of release
+     * @param string $shortDescription A short description
+     * @param int $price The price
+     * @param int $windows If it is on windows (0 if no, 1 if yes)
+     * @param int $macos If it is on macos
+     * @param int $linux If it is on linux
+     * @param int $posterId The id of the poster
+     * @param int|null $developerId The developer id
+     * @param int|null $id The id of the game
+     * @param int|null $metacritic The metacritic score.
+     * @return Game
+     */
     public static function create(string $name, int $releaseYear, string $shortDescription, int $price, int $windows, int $macos, int $linux, int $posterId, ?int $developerId = null, ?int $id = null, ?int $metacritic = null): Game
     {
         $game = new Game();
@@ -320,7 +335,7 @@ class Game
      *
      * @return $this The game
      */
-    public function insert() : Game
+    public function insert(): Game
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<< 'SQL'
@@ -368,7 +383,7 @@ class Game
      *
      * @return $this The game
      */
-    public function update() : Game
+    public function update(): Game
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<< 'SQL'
