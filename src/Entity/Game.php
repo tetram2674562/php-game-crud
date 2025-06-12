@@ -55,7 +55,7 @@ class Game
         return $response;
     }
 
-    public static function create(string $name, int $releaseYear, string $shortDescription, int $price, int $windows, int $macos, int $linux, int $posterId, int $developerId = null, int $id = null, int $metacritic = null): Game
+    public static function create(string $name, int $releaseYear, string $shortDescription, int $price, int $windows, int $macos, int $linux, int $posterId, ?int $developerId = null, ?int $id = null, ?int $metacritic = null): Game
     {
         $game = new Game();
         $game->setName($name);
