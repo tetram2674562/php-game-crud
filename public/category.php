@@ -9,7 +9,7 @@ use Exception\ParameterException;
 use Html\AppWebPage;
 
 try {
-    if (!isset($_GET["categoryId"]) || empty($_GET["categoryId"])) {
+    if (empty($_GET["categoryId"]) || !ctype_digit($_GET["categoryId"])) {
         throw new ParameterException();
     }
     // Find the category
