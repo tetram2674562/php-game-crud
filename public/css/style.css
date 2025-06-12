@@ -41,6 +41,29 @@ a{
     gap: 0.4vw;
 }
 
+.__content{
+    display:flex;
+    flex-direction: column;
+    gap:0.4vw;
+}
+
+.detail:nth-child(odd){
+    display: flex;
+    flex-direction: row;
+}
+
+.detail:nth-child(even){
+    display:flex;
+    flex-direction: row-reverse;
+}
+
+.detail > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+p:first-child
 
 @media screen and (max-width: 748px) {
 
