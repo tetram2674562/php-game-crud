@@ -19,7 +19,7 @@ class GameCollection
      * @return Game[] The game list
      * @throws EntityNotFoundException If there is no result.
      */
-    public static function findGameByCollectionId(int $categoryId): array
+    public static function findGameByCategoryId(int $categoryId): array
     {
         $stmt = MyPdo::getInstance()->prepare(
             <<<SQL
