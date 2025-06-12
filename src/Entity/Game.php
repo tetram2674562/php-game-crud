@@ -24,6 +24,10 @@ class Game
     private ?int $developerId;
     private int $posterId;
 
+    private function __construct()
+    {
+    }
+
     /** Find a game by an Id.
      *
      * @param int $id Game id.
@@ -249,6 +253,42 @@ class Game
     {
         $this->posterId = $posterId;
     }
+
+    /** Delete the game from the database.
+     *
+     * @return $this The instance of this game.
+     */
+    public function delete(): Game
+    {
+
+        // Delete request
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<'SQL'
+        DELETE FROM game
+        WHERE id = :id
+        SQL
+        );
+        // bind parameter id to the current id
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        // Set the current id to null
+        $this->id = null;
+        return $this;
+    }
+
+    /**
+     * Save the data of the game inside the database
+     * @return void
+     */
+    public function save(): void
+    {
+        if ($this->getId() == null) {
+            $this->insert();
+        } else {
+            $this->update();
+        }
+    }
+
     /** Get the id of the game
      *
      * @return int id of the game
@@ -257,6 +297,7 @@ class Game
     {
         return $this->id;
     }
+
     /** Set the id of the game
      *
      * @param int|null $id The id of the game or null if It isn't present in the database.
@@ -265,5 +306,82 @@ class Game
     public function setId(?int $id): void
     {
         $this->id = $id;
+    }
+
+    public function insert()
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            <<< 'SQL'
+                INSERT INTO game(name,
+                                   releaseYear,
+                                   shortDescription,
+                                   price,
+                                   windows,
+                                   linux,
+                                   mac,
+                                   metacritic,
+                                   developerId,
+                                   posterId) 
+                VALUES (:name,
+                        :releaseYear,
+                        :shortDescription,
+                        :price,
+                        :windows,
+                        :mac,
+                        :linux,
+                        :metacritic,
+                        :developerId,
+                        :posterId)
+            SQL
+        );
+        // bind param for all field
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":releaseYear", $this->releaseYear);
+        $stmt->bindParam(":shortDescription", $this->shortDescription);
+        $stmt->bindParam(":price", $this->price);
+        $stmt->bindParam(":windows", $this->windows);
+        $stmt->bindParam(":mac", $this->mac);
+        $stmt->bindParam(":linux", $this->linux);
+        $stmt->bindParam(":metacritic", $this->metacritic);
+        $stmt->bindParam(":developerId", $this->developerId);
+        $stmt->bindParam(":posterId", $this->posterId);
+        $stmt->execute();
+        // set id to the defined id (autoincrement by the database)
+        $this->setId(intval(MyPdo::getInstance()->lastInsertId()));
+
+        return $this;
+    }
+
+    public function update()
+    {
+        $stmt = MyPdo::getInstance()->prepare(
+            <<< 'SQL'
+                UPDATE game
+                SET name = :name
+                SET releaseYear = :releaseYear
+                SET shortDescription = :shortDescription
+                SET price = :price
+                SET windows = :windows
+                SET mac = :mac
+                SET linux = :linux
+                SET metacritic = :metacritic
+                SET developerId = :developerId
+                SET posterId = :posterId
+                WHERE id = :id
+            SQL
+        );
+        $stmt->bindParam(":name", $this->name);
+        $stmt->bindParam(":releaseYear", $this->releaseYear);
+        $stmt->bindParam(":shortDescription", $this->shortDescription);
+        $stmt->bindParam(":price", $this->price);
+        $stmt->bindParam(":windows", $this->windows);
+        $stmt->bindParam(":mac", $this->mac);
+        $stmt->bindParam(":linux", $this->linux);
+        $stmt->bindParam(":metacritic", $this->metacritic);
+        $stmt->bindParam(":developerId", $this->developerId);
+        $stmt->bindParam(":posterId", $this->posterId);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        return $this;
     }
 }
