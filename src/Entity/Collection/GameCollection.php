@@ -4,9 +4,10 @@
 
 declare(strict_types=1);
 
-namespace Entity;
+namespace Entity\Collection;
 
 use Database\MyPdo;
+use Entity\Game;
 use Exception\EntityNotFoundException;
 use PDO;
 
