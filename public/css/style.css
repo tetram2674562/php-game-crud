@@ -4,6 +4,7 @@ html, body {
     display: flex;
     flex-direction: column;
     background-color: #1b2838;
+    gap:0.4vw;
 }
 
 body {
@@ -15,7 +16,11 @@ body {
 }
 
 .footer{
+    gap:1em;
     height: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .header, .footer, h3{
     text-align: center;
@@ -40,7 +45,6 @@ a{
     overflow-y: scroll;
     overflow-x: hidden;
     height: 80%;
-    gap: 2em;
 }
 
 .index-content{
