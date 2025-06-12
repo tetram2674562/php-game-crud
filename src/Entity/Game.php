@@ -140,7 +140,7 @@ class Game
      *
      * @return int get the developer id of the game
      */
-    public function getDeveloperId(): int
+    public function getDeveloperId(): ?int
     {
         return $this->developerId;
     }
