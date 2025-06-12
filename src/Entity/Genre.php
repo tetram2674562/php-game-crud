@@ -22,7 +22,7 @@ class Genre
     public static function findById(int $id): Genre
     {
         $stmt = MyPdo::getInstance()->prepare(<<< 'SQL'
-            SELECT id,name
+            SELECT id,description
             FROM genre
             WHERE id = :id
         SQL);
