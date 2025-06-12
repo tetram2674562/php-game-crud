@@ -25,10 +25,10 @@ try {
         $appWebPage->appendContent(
             <<<HTML
         <a class='detail' href="game.php?gameId={$game->getId()}">
-            <img src="poster.php?posterId={$game->getPosterId()}" alt="{$appWebPage->escapeString($game->getName())}">
+            <img src="poster.php?posterId={$game->getPosterId()}" alt="{$game->getName()}">
             <div>
-                <p>{$appWebPage->escapeString($game->getName())} ({$game->getReleaseYear()})</p>
-                <p>{$appWebPage->escapeString($game->getShortDescription())}</p>
+                <h3>{$game->getName()} ({$game->getReleaseYear()})</h3>
+                <p>{$game->getShortDescription()}</p>
             </div>
         </a>
         HTML
