@@ -16,7 +16,11 @@ try {
         $poster = Poster::findById($posterId);
         // return the poster image
         header('Content-Type: image/jpeg');
-        echo $poster->getJpeg();
+        if ($poster->getJpeg() === false) {
+            echo "img/default_poster.jpeg";
+        } else {
+            echo $poster->getJpeg();
+        }
         // if posterId not define or not an int throw an exception
     } else {
         throw new ParameterException('');
