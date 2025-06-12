@@ -65,24 +65,26 @@ try {
         $webpage->setTitle($title);
         $webpage->appendContent(
             <<<HTML
-                        <div class="game_content">
-                            <div class="game_infos">
-                                <img src="poster.php?posterId={$posterId}" alt="{$name} poster">
-                                <div class="little_infos">
-                                    <div class="icons">
-                                        {$icons}
+                            <div class="game_content">
+                                <main>
+                                    <div class="game_infos">
+                                    <img src="poster.php?posterId={$posterId}" alt="{$name} poster">
+                                    <div class="little_infos">
+                                        <div class="icons">
+                                            {$icons}
+                                        </div>
+                                        <p>{$year}</p>
                                     </div>
-                                    <p>{$year}</p>
+                                    <p>{$dev}</p>
                                 </div>
-                                <p>{$dev}</p>
-                            </div>
-                            <div class="game_details">
-                                <div class="metrics">
-                                    <p>{$note}</p>
-                                    <p>{$price}</p>
+                                <div class="game_details">
+                                    <div class="metrics">
+                                        <p>{$note}</p>
+                                        <p>{$price}</p>
+                                    </div>
+                                    <p>{$desc}</p>
                                 </div>
-                                <p>{$desc}</p>
-                            </div>
+                            </main>
                             <div class="game_genres">
                                 <p>Genres</p>
 

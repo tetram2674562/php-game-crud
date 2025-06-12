@@ -76,6 +76,32 @@ a{
     gap: 1vw;
 }
 
+.game_infos, .game_genre {
+    display: flex;
+    flex-direction: column;
+}
+
+.icons, .little_infos, .metrics{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+svg{
+    height: 3vw;
+    width: 3vw;
+}
+
+.game_genre, .game_cat{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4vw;
+}
+main{
+    display: flex;
+    flex-direction: row;
+}
 @media screen and (min-width: 749px) {
 
 
