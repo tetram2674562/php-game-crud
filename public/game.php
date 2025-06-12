@@ -59,11 +59,12 @@ try {
         $categories = CategoryCollection::getCategoriesFromGameId($id);
 
         // generate html page
-        $webpage->setTitle("Jeux vido - {$name}");
+        $title = $webpage->escapeString("Jeux vidéo - {$name}");
+        $webpage->setTitle($title);
         $webpage->appendContent(
             <<<HTML
                         <div class="game_infos">
-                            <img src="../poster.php?{$posterId}" alt="{$name} poster">
+                            <img src="poster.php?posterId={$posterId}" alt="{$name} poster">
                             <div class="little_infos">
                                 <div class="icons">
                                     {$icons}
