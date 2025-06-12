@@ -36,7 +36,7 @@ class CategoryCollection
      * @return Category[] The list of category
      * @throws EntityNotFoundException If no category founded.
      */
-    public function getCategoriesFromGameId(int $id): array
+    public static function getCategoriesFromGameId(int $id): array
     {
         // prepare request
         $stmt = MyPdo::getInstance()->prepare(

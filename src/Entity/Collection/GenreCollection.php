@@ -34,7 +34,7 @@ class GenreCollection
      * @return Genre[] The genre list.
      * @throws EntityNotFoundException If no genre founded.
      */
-    public function getGenresFromGameId(int $id): array
+    public static function getGenresFromGameId(int $id): array
     {
         // prepare request
         $stmt = MyPdo::getInstance()->prepare(
