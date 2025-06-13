@@ -50,7 +50,7 @@ p, a, label, option{
      height: 80%;
  }
 
-.game_genres, .game_cat, p, .desc, .detail, form{
+.game_genres, .game_cat, p, .desc, .detail, form, .sort{
     background-color: #16202d;
 }
 /* Index style */
@@ -160,6 +160,7 @@ form{
 
 .sort{
     color: #78899b;
+    background-color: ;
 }
 
 /* Mobile styles */
