@@ -415,4 +415,26 @@ class Game
         $stmt->execute();
         return $this;
     }
+
+
+    public function assignCategory(int $categoryId): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+            INSERT INTO game_category(gameId,categoryId) VALUES (:gameId,:categoryId)
+        SQL);
+        $stmt->bindParam(":gameId", $this->id);
+        $stmt->bindParam(":categoryId", $categoryId);
+        $stmt->execute();
+
+    }
+
+    public function assignGenre(int $genreId): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+            INSERT INTO game_genre(gameId,genreId) VALUES (:gameId,:genreId)
+        SQL);
+        $stmt->bindParam(":gameId", $this->id);
+        $stmt->bindParam(":categoryId", $genreId);
+        $stmt->execute();
+    }
 }
