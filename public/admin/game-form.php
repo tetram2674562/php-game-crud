@@ -15,8 +15,9 @@ try {
     }
     $gameForm = new GameForm($game);
     echo $gameForm->toHTML("game-save.php");
-} catch (ParameterException) {
-    http_response_code(400);
+} catch (EntityNotFoundException) {
+    http_response_code(404);
+    header("Location: /");
 } catch (Exception) {
     http_response_code(500);
 }

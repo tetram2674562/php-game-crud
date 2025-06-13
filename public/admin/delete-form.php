@@ -7,6 +7,7 @@ use Exception\EntityNotFoundException;
 use Exception\ParameterException;
 use Entity\Genre;
 use Entity\Category;
+
 try {
     if (!empty($_GET["gameId"]) && ctype_digit($_GET["gameId"])) {
         $game = Game::findById(intval($_GET["gameId"]));
@@ -29,3 +30,4 @@ try {
 } catch (EntityNotFoundException) {
     http_response_code(404);
 }
+header("Location: /");
