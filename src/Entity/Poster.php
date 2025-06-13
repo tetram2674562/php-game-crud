@@ -62,7 +62,7 @@ class Poster
      * @param int|null $id The id of the poster. It can be null or an int.
      * @return void
      */
-    private function __constructor(string $jpeg, ?int $id)
+    private function __construct(string $jpeg, ?int $id)
     {
         $this->id = $id;
         $this->jpeg = $jpeg;
