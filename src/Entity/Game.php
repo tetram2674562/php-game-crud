@@ -292,7 +292,8 @@ class Game
         SQL
         );
         // bind parameter id to the current id
-        $stmt->bindParam(":id", $this->id);
+        $id = $this->getId();
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
         // Set the current id to null
         $this->id = null;
@@ -458,7 +459,7 @@ class Game
     public function removeCategory(int $categoryId): void
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
-            DELETE FROM game_category WHERE categoryId = :categoryId  AND gameId = :gameId)
+            DELETE FROM game_category WHERE categoryId = :categoryId  AND gameId = :gameId
         SQL);
         $id = $this->getId();
         $stmt->bindParam(":gameId", $id);
@@ -471,14 +472,14 @@ class Game
      * @param int $genre The genre.
      * @return void
      */
-    public function removeGenre(int $genre): void
+    public function removeGenre(int $genreId): void
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
-            DELETE FROM game_genre(gameId,genreId) VALUES (:gameId,:genreId)
+            DELETE FROM game_genre WHERE genreId = :genreId  AND gameId = :gameId
         SQL);
         $id = $this->getId();
         $stmt->bindParam(":gameId", $id);
-        $stmt->bindParam(":categoryId", $genreId);
+        $stmt->bindParam(":genreId", $genreId);
         $stmt->execute();
     }
 
