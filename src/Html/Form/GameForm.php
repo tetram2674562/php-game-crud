@@ -198,7 +198,7 @@ class GameForm
         if ($posterId == null) {
             // As written inside the php documentation, I can get the server root directory using $_SERVER["DOCUMENT_ROOT"]
             $image = $_SERVER["DOCUMENT_ROOT"] . "/img/default_poster.jpg";
-            $poster = Poster::create(file_get_contents($image,true));
+            $poster = Poster::create(file_get_contents($image, true));
             $poster->save();
             $posterId = $poster->getId();
         }
