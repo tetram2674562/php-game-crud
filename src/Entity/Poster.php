@@ -12,7 +12,7 @@ use PDO;
 
 class Poster
 {
-    private int $id;
+    private ?int $id;
     private string $jpeg;
 
     /**
@@ -139,6 +139,30 @@ class Poster
             // Else update
             $this->update();
         }
+
+        return $this;
+    }
+
+    /** Delete the current poster in the database.
+     * Set the current instance id as null.
+     *
+     * @return $this The current instance
+     */
+    public function delete(): Poster
+    {
+        // Delete the database line.
+        $deletePoster = MyPdo::getInstance()->prepare(
+            <<<SQL
+            DELETE 
+            FROM poster
+            WHERE id = :id
+            SQL
+        );
+        $id = $this->getId();
+        $deletePoster->bindParam(":id", $id);
+        $deletePoster->execute();
+        //set the current id as null
+        $this->id = null;
 
         return $this;
     }
