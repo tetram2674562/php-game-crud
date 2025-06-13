@@ -416,25 +416,103 @@ class Game
         return $this;
     }
 
-
+    /** Assign the game to a category
+     *
+     * @param int $categoryId The category id
+     * @return void
+     */
     public function assignCategory(int $categoryId): void
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
             INSERT INTO game_category(gameId,categoryId) VALUES (:gameId,:categoryId)
         SQL);
-        $stmt->bindParam(":gameId", $this->id);
+        $id = $this->getId();
+        $stmt->bindParam(":gameId", $id);
         $stmt->bindParam(":categoryId", $categoryId);
         $stmt->execute();
 
     }
 
+    /** Assign the game to a genre
+     *
+     * @param int $genreId the genre id
+     * @return void
+     */
     public function assignGenre(int $genreId): void
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
             INSERT INTO game_genre(gameId,genreId) VALUES (:gameId,:genreId)
         SQL);
-        $stmt->bindParam(":gameId", $this->id);
+
+        $id = $this->getId();
+        $stmt->bindParam(":gameId", $id);
         $stmt->bindParam(":categoryId", $genreId);
         $stmt->execute();
+    }
+
+    /** Unassign the game to a category
+     *
+     * @param int $categoryId The id of the category
+     * @return void
+     */
+    public function removeCategory(int $categoryId): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+            DELETE FROM game_category WHERE categoryId = :categoryId  AND gameId = :gameId)
+        SQL);
+        $id = $this->getId();
+        $stmt->bindParam(":gameId", $id);
+        $stmt->bindParam(":categoryId", $categoryId);
+        $stmt->execute();
+    }
+
+    /** Unassign the game to a genre
+     *
+     * @param int $genre The genre.
+     * @return void
+     */
+    public function removeGenre(int $genre): void
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+            DELETE FROM game_genre(gameId,genreId) VALUES (:gameId,:genreId)
+        SQL);
+        $id = $this->getId();
+        $stmt->bindParam(":gameId", $id);
+        $stmt->bindParam(":categoryId", $genreId);
+        $stmt->execute();
+    }
+
+    public function getAssignedCategories(): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+        SELECT * FROM category 
+        WHERE id IN (
+            SELECT categoryId FROM game_category WHERE gameId = :gameId)
+        SQL);
+        $id = $this->getId();
+        $stmt->bindParam(":gameId", $id);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Category::class);
+        if (($result = $stmt->fetchAll()) === false) {
+            $result = [];
+        }
+        return $result;
+    }
+
+    public function getAssignedGenres(): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+        SELECT * FROM genre 
+        WHERE id IN (
+            SELECT genreId FROM game_genre WHERE gameId = :gameId)
+        SQL);
+        $id = $this->getId();
+        $stmt->bindParam(":gameId", $id);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, Genre::class);
+        if (($result = $stmt->fetchAll()) === false) {
+            $result = [];
+        }
+        return $result;
     }
 }
