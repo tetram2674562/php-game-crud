@@ -56,7 +56,7 @@ try {
             <input name="categoryId" type="hidden" value="{$category->getId()}">
                 <label for="sort">
                     Trier les jeux par :
-                    <select name="sort" id="sort" onchange="this.form.submit()">
+                    <select name="sort" class="sort" onchange="this.form.submit()">
                         <option {$select[0]} value="0">Aucun tri</option>
                         <option {$select[1]} value="1">Tri par titre</option>
                         <option {$select[2]} value="2">Tri par année</option>

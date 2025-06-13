@@ -38,7 +38,7 @@ a{
     text-decoration: none;
 }
 
-p, a{
+p, a, label, option{
     font-size: 24px;
     color: #78899b;
     padding: 0.2vw;
@@ -50,7 +50,7 @@ p, a{
      height: 80%;
  }
 
-.game_genres, .game_cat, p, .desc, .detail{
+.game_genres, .game_cat, p, .desc, .detail, form{
     background-color: #16202d;
 }
 /* Index style */
@@ -147,11 +147,21 @@ main{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
-#add_button, #home_button{
+#add_button, #home_button, #update_button{
     border: unset;
 }
+
+form{
+    padding: 0.2vw;
+}
+
+.sort{
+    color: #78899b;
+}
+
 /* Mobile styles */
 @media screen and (min-width: 749px) {
 
