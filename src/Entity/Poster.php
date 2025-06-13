@@ -101,4 +101,26 @@ class Poster
 
         return $this;
     }
+
+    /** Update the poster in the database.
+     * Set the jpeg with the current instance jpeg.
+     *
+     * @return $this The current instance.
+     */
+    public function update(): Poster
+    {
+        // Update the poster in the database
+        $updateDataBase = MyPdo::getInstance()->prepare(
+            <<<SQL
+            UPDATE poster
+            SET jpeg = :jpeg
+            WHERE id = :id
+            SQL
+        );
+        $updateDataBase->bindValue(":jpeg", $this->getJpeg());
+        $updateDataBase->bindValue(":id", $this->getId());
+        $updateDataBase->execute();
+
+        return $this;
+    }
 }
