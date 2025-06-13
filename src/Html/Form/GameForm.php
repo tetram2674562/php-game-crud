@@ -73,24 +73,42 @@ class GameForm
                     Description courte <input type="text" name="shortDescription" id="shortDescription" value="{$this->escapeString($this?->getGame()?->getShortDescription())}" required><br>
                 </label>
                 <label for="price">
-                    Prix <input type="number" name="price" id="price" value="{$this->escapeString($this?->getGame()?->getPrice())}" required><br>
-                </label>
-                <label for="windows">
-                    Windows <input type="text" name="windows" id="windows" value="{$this->escapeString($this?->getGame()?->getWindows())}" required><br>
-                </label>
-                <label for="linux">
-                    Linux <input type="text" name="linux" id="linux" value="{$this->escapeString($this?->getGame()?->getLinux())}" required><br>
-                </label>
-                <label for="mac">
-                    MacOS <input type="text" name="mac" id="mac" value="{$this->escapeString($this?->getGame()?->getMac())}" required><br>
+                    Prix (en centimes) <input type="number" name="price" min="0" id="price" value="{$this->escapeString($this?->getGame()?->getPrice())}" required> €<br>
                 </label>
                 <label for="metacritic">
-                    Score metacritic <input type="number" name="metacritic" id="metacritic" value="{$this->escapeString($this->getGame()?->getMetacritic())}" required><br>
+                    Score metacritic <input type="number" min="0" max="100" name="metacritic" id="metacritic" value="{$this->escapeString($this->getGame()?->getMetacritic())}" required><br>
                 </label>
                 <!-- Add a new poster so It's a file input -->
                 <label for="poster">
                     Poster <input type="file" name="poster" id="poster" value="" accept="image/jpeg"><br>
                 </label>
+        HTML;
+        $windows = $this->getGame()?->getWindows() == 0 ? ["selected='selected'",""] : ["","selected='selected'"];
+        $linux = $this->getGame()?->getLinux() == 0 ? ["selected='selected'",""] : ["","selected='selected'"];
+        $mac = $this->getGame()?->getMac() == 0 ? ["selected='selected'",""] : ["","selected='selected'"];
+        $form .= <<<HTML
+                <label for="windows">
+                    Windows <select name="windows" id="windows">
+                        <option value="0" $windows[0]>Incompatible</option>
+                        <option value="1" $windows[1]>Compatible</option>
+                    </select>
+                </label><br>
+        HTML;
+        $form .= <<<HTML
+                <label for="linux">
+                    Linux <select name="linux" id="linux">
+                        <option value="0" $linux[0]>Incompatible</option>
+                        <option value="1" $linux[1]>Compatible</option>
+                    </select>
+                </label> <br>   
+        HTML;
+        $form .= <<<HTML
+                <label for="mac">
+                    MacOS <select name="mac" id="mac">
+                        <option value="0" $mac[0]>Incompatible</option>
+                        <option value="1" $mac[1]>Compatible</option>
+                    </select>
+                </label>   <br> 
         HTML;
         $selected = $developer == null ? "selected='selected'" : "";
         $form .= "\t\t\tDeveloper <select name='developer'>\n\t\t\t\t<option value='' {$selected}></option>";
@@ -101,7 +119,7 @@ class GameForm
 
         $form .= "\t\t\t</select>\n\t\t\t<div class='categories_select'>Categories";
         foreach (CategoryCollection::findAll() as $category) {
-            $form.= <<< HTML
+            $form .= <<< HTML
                     <label>
                         <input type="checkbox" name="categories[]" value="{$this->escapeString($category->getDescription())}"> {$this->escapeString($category->getDescription())}
                     </label>
@@ -109,7 +127,7 @@ class GameForm
         }
         $form .= "\t\t\t</div>\n\t\t\t<div class='genres_select'>Genres";
         foreach (GenreCollection::findAll() as $genre) {
-            $form.= <<< HTML
+            $form .= <<< HTML
                     <label>
                         <input type="checkbox" name="genres[]" value="{$this->escapeString($genre->getDescription())}"> {$this->escapeString($genre->getDescription())}
                     </label>
