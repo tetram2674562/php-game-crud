@@ -21,9 +21,7 @@ class GameForm
     use StringEscaper;
 
     private ?Game $game;
-    private array $genres = [];
-    private array $categories = [];
-    private string $posterData;
+    private ?string $posterData;
     /** Create a new form
      *
      * @param Game|null $game A game (or null if there is no game).
@@ -80,22 +78,23 @@ class GameForm
         <body>
             <h1>Formulaire de modification de la base de données</h1>
             <form action="{$action}" method="post" class="form">
-                <input type="hidden" name="id" id="id" value="{$this?->getGame()?->getId()}">
-               
+                <input type="hidden" name="id" id="id" value="{$this->getGame()?->getId()}">
+                <input type="hidden" name="posterId" id="posterId" value="{$this->getGame()?->getPosterId()}">
                 <label for="name">
                     Nom <input type="text" name="name" id="name" value="{$this->escapeString($this?->getGame()?->getName())}" required> <br>
                 </label>
                 <label for="releaseYear">
-                    Date de sortie <input type="text" name="releaseYear" id="releaseYear" value="{$this->escapeString($this->getGame()?->getReleaseYear())}" required><br>
+                    Date de sortie <input type="text" name="releaseYear" id="releaseYear" value="{$this->escapeString(strval($this->getGame()?->getReleaseYear()))}" required><br>
                 </label>
                 <label for="shortDescription">
                     Description courte <input type="text" name="shortDescription" id="shortDescription" value="{$this->escapeString($this?->getGame()?->getShortDescription())}" required><br>
                 </label>
                 <label for="price">
-                    Prix (en centimes) <input type="number" name="price" min="0" id="price" value="{$this->escapeString($this?->getGame()?->getPrice())}" required> €<br>
+                    Prix (en centimes) <input type="number" name="price" min="0" id="price" value="{$this?->getGame()?->getPrice()}" required> €<br>
                 </label>
+                
                 <label for="metacritic">
-                    Score metacritic <input type="number" min="0" max="100" name="metacritic" id="metacritic" value="{$this->escapeString($this->getGame()?->getMetacritic())}" required><br>
+                    Score metacritic <input type="number" min="0" max="100" name="metacritic" id="metacritic" value="{$this->getGame()?->getMetacritic()}" required><br>
                 </label>
                 <!-- Add a new poster so It's a file input -->
                 <label for="poster">
@@ -170,5 +169,102 @@ class GameForm
         HTML;
 
         return $form;
+    }
+
+    /** Get the game from the POST query string
+     *
+     * @return void
+     * @throws ParameterException If a wrong parameter is given
+     */
+    public function setGameFromQueryString()
+    {
+        $id = null;
+        if (!empty($_POST["id"]) && ctype_digit($_POST["id"])) {
+            $id = intval($_POST["id"]);
+        }
+        $this->checkCorrectQueryString();
+        $name = $_POST["name"];
+        $releaseYear = $_POST["releaseYear"];
+        $shortDescription = $_POST["shortDescription"];
+        $price = $_POST["price"];
+        $windows = $_POST["windows"];
+        $linux = $_POST["linux"];
+        $mac = $_POST["mac"];
+
+
+        $developer = !empty($_POST["developer"]) && ctype_digit($_POST["developer"]) ? intval($_POST["developer"]) : null;
+        $metacritic = !empty($_POST["metacritic"]) && ctype_digit($_POST["metacritic"]) ? intval($_POST["metacritic"]) : null;
+        $categories = $_POST["categories"];
+
+        $genres = $_POST["genres"];
+        // if there is a poster Id define it.
+        $posterId = !empty($_POST["posterId"]) && ctype_digit($_POST["posterId"]) ? intval($_POST["posterId"]) : null;
+
+        if (isset($_POST["poster"])) {
+            $poster = Poster::create($_POST["poster"]);
+            $poster->save();
+            $posterId = $poster->getId();
+        } elseif ($posterId == null) {
+            $image = imagecreatefromjpeg("default-poster.php");
+            ob_start();
+            imagejpeg($image);
+            $stringdata = ob_get_contents();
+            ob_end_clean();
+            $poster = Poster::create($stringdata);
+            $poster->save();
+            $posterId = $poster->getId();
+        }
+
+        $this->game = Game::create($name, $releaseYear, $shortDescription, $price, intval($windows), intval($mac), intval($linux), $posterId, intval($developer), $id, $metacritic);
+        foreach ($genres as $genre) {
+            $this->getGame()->assignGenre($genre->getId());
+        }
+        foreach ($categories as $category) {
+            $this->getGame()->assignCategory($category->getId());
+        }
+
+    }
+
+
+    /** Check if the query string is correct
+     *
+     * @return void
+     * @throws ParameterException if there is an incorrect parameter given in the query string.
+     */
+    private function checkCorrectQueryString(): void
+    {
+        if (empty($_POST["name"])) {
+            throw new ParameterException();
+        }
+        if (!empty($_POST["posterId"]) || !ctype_digit($_POST["posterId"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["releaseYear"]) || !ctype_digit($_POST["releaseYear"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["shortDescription"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["price"]) || !ctype_digit($_POST["price"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["poster"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["windows"]) || !ctype_digit($_POST["windows"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["linux"]) || !ctype_digit($_POST["linux"])) {
+            throw new ParameterException();
+        }
+        if (empty($_POST["mac"]) || !ctype_digit($_POST["mac"])) {
+            throw new ParameterException();
+        }
+        if (!isset($_POST["categories"]) || count($_POST["categories"]) == 0) {
+            throw new ParameterException();
+        }
+        if (!isset($_POST["genres"]) || count($_POST["genres"]) == 0) {
+            throw new ParameterException();
+        }
     }
 }
