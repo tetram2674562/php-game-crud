@@ -39,7 +39,8 @@ class CategoryCollection
     public static function getCategoriesFromGameId(int $id): array
     {
         // prepare request
-        $stmt = MyPdo::getInstance()->prepare(<<<SQL
+        $stmt = MyPdo::getInstance()->prepare(
+            <<<SQL
             SELECT *
             FROM category
             WHERE id IN (SELECT categoryId
@@ -53,7 +54,7 @@ class CategoryCollection
         // fetch response
         $stmt->setFetchMode(PDO::FETCH_CLASS, Category::class);
         // if no category founded
-        if(($resp = $stmt->fetchAll()) === false){
+        if (($resp = $stmt->fetchAll()) === false) {
             throw new EntityNotFoundException();
         }
         return $resp;

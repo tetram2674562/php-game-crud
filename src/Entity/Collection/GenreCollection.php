@@ -52,7 +52,7 @@ class GenreCollection
         // fetch response
         $stmt->setFetchMode(PDO::FETCH_CLASS, Genre::class);
         // if no genre founded
-        if(($resp = $stmt->fetchAll()) === false){
+        if (($resp = $stmt->fetchAll()) === false) {
             throw new EntityNotFoundException();
         }
         return $resp;
