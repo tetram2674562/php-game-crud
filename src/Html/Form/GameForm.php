@@ -77,7 +77,7 @@ class GameForm
         </head>
         <body>
             <h1>Formulaire de modification de la base de données</h1>
-            <form action="{$action}" method="post" class="form">
+            <form action="{$action}" method="post" class="form" enctype="multipart/form-data">
                 <input type="hidden" name="id" id="id" value="{$this->getGame()?->getId()}">
                 <input type="hidden" name="posterId" id="posterId" value="{$this->getGame()?->getPosterId()}">
                 <label for="name">
@@ -95,10 +95,6 @@ class GameForm
                 
                 <label for="metacritic">
                     Score metacritic <input type="number" min="0" max="100" name="metacritic" id="metacritic" value="{$this->getGame()?->getMetacritic()}"><br>
-                </label>
-                <!-- Add a new poster so It's a file input -->
-                <label for="poster">
-                    Poster <input type="file" name="poster" id="poster" value="" accept="image/jpeg"><br>
                 </label>
         HTML;
         $windows = $this->getGame()?->getWindows() == 0 ? ["selected='selected'",""] : ["","selected='selected'"];
@@ -199,18 +195,10 @@ class GameForm
         $genres = $_POST["genres"];
         // if there is a poster Id define it.
         $posterId = !empty($_POST["posterId"]) && ctype_digit($_POST["posterId"]) ? intval($_POST["posterId"]) : null;
-
-        if (isset($_POST["poster"])) {
-            $poster = Poster::create($_POST["poster"]);
-            $poster->save();
-            $posterId = $poster->getId();
-        } elseif ($posterId == null) {
-            $image = imagecreatefromjpeg("default-poster.php");
-            ob_start();
-            imagejpeg($image);
-            $stringdata = ob_get_contents();
-            ob_end_clean();
-            $poster = Poster::create($stringdata);
+        if ($posterId == null) {
+            // As written inside the php documentation, I can get the server root directory using $_SERVER["DOCUMENT_ROOT"]
+            $image = $_SERVER["DOCUMENT_ROOT"] . "/img/default_poster.jpg";
+            $poster = Poster::create(file_get_contents($image,true));
             $poster->save();
             $posterId = $poster->getId();
         }
