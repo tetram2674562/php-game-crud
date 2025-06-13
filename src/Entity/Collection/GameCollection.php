@@ -19,16 +19,20 @@ class GameCollection
      * @return Game[] The game list
      * @throws EntityNotFoundException If there is no result.
      */
-    public static function findGameByCategoryId(int $categoryId): array
+    public static function findGameByCategoryId(int $categoryId, int $sort = 0): array
     {
-        $stmt = MyPdo::getInstance()->prepare(
-            <<<SQL
+        $querry = <<<SQL
             SELECT * 
             FROM game g 
                 INNER JOIN game_category c ON (c.gameId = g.id)
             WHERE c.categoryId = :categoryId
-            SQL
-        );
+            SQL;
+        if ($sort === 1) {
+            $querry .= "\nORDER BY name";
+        } elseif ($sort === 2) {
+            $querry .= "\nORDER BY releaseYear";
+        }
+        $stmt = MyPdo::getInstance()->prepare($querry);
         $stmt->bindValue(':categoryId', $categoryId);
         $stmt->setFetchMode(PDO::FETCH_CLASS, Game::class);
         $stmt->execute();
@@ -44,16 +48,22 @@ class GameCollection
      * @return Game[] The list of games
      * @throws EntityNotFoundException If no game is found.
      */
-    public static function findGameByGenreId(int $genreId): array
+    public static function findGameByGenreId(int $genreId, int $sort = 0): array
     {
-        $stmt = MyPdo::getInstance()->prepare(
-            <<<SQL
+        $querry =   <<<SQL
             SELECT * 
             FROM game g 
                 INNER JOIN game_genre c ON (c.gameId = g.id)
             WHERE c.genreId = :genreId
-            SQL
-        );
+            SQL;
+
+
+        if ($sort === 1) {
+            $querry .= "\nORDER BY name";
+        } elseif ($sort === 2) {
+            $querry .= "\nORDER BY releaseYear";
+        }
+        $stmt = MyPdo::getInstance()->prepare($querry);
         $stmt->bindValue(':genreId', $genreId);
         $stmt->setFetchMode(PDO::FETCH_CLASS, Game::class);
         $stmt->execute();
