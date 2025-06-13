@@ -94,7 +94,7 @@ class GameForm
                 </label>
                 
                 <label for="metacritic">
-                    Score metacritic <input type="number" min="0" max="100" name="metacritic" id="metacritic" value="{$this->getGame()?->getMetacritic()}" required><br>
+                    Score metacritic <input type="number" min="0" max="100" name="metacritic" id="metacritic" value="{$this->getGame()?->getMetacritic()}"><br>
                 </label>
                 <!-- Add a new poster so It's a file input -->
                 <label for="poster">
@@ -144,7 +144,7 @@ class GameForm
             }
             $form .= <<< HTML
                     <label>
-                        <input type="checkbox" name="categories[]" {$checked} value="{$this->escapeString($category->getDescription())}"> {$this->escapeString($category->getDescription())}
+                        <input type="checkbox" name="categories[]" {$checked} value="{$category->getId()}"> {$this->escapeString($category->getDescription())}
                     </label>
             HTML;
         }
@@ -156,7 +156,7 @@ class GameForm
             }
             $form .= <<< HTML
                     <label>
-                        <input type="checkbox" name="genres[]" {$checked} value="{$this->escapeString($genre->getDescription())}"> {$this->escapeString($genre->getDescription())}
+                        <input type="checkbox" name="genres[]" {$checked} value="{$genre->getId()}"> {$this->escapeString($genre->getDescription())}
                     </label>
             HTML;
         }
@@ -171,25 +171,25 @@ class GameForm
         return $form;
     }
 
-    /** Get the game from the POST query string
+    /** Save the game from the POST query string
      *
      * @return void
      * @throws ParameterException If a wrong parameter is given
      */
-    public function setGameFromQueryString()
+    public function saveGameFromQueryString()
     {
         $id = null;
         if (!empty($_POST["id"]) && ctype_digit($_POST["id"])) {
             $id = intval($_POST["id"]);
         }
         $this->checkCorrectQueryString();
-        $name = $_POST["name"];
-        $releaseYear = $_POST["releaseYear"];
-        $shortDescription = $_POST["shortDescription"];
-        $price = $_POST["price"];
-        $windows = $_POST["windows"];
-        $linux = $_POST["linux"];
-        $mac = $_POST["mac"];
+        $name = $this->stripTagsAndTrim($_POST["name"]);
+        $releaseYear =  intval($_POST["releaseYear"]);
+        $shortDescription =  $this->stripTagsAndTrim($_POST["shortDescription"]);
+        $price = intval($_POST["price"]);
+        $windows = intval($_POST["windows"]);
+        $linux = intval($_POST["linux"]);
+        $mac = intval($_POST["mac"]);
 
 
         $developer = !empty($_POST["developer"]) && ctype_digit($_POST["developer"]) ? intval($_POST["developer"]) : null;
@@ -215,12 +215,13 @@ class GameForm
             $posterId = $poster->getId();
         }
 
-        $this->game = Game::create($name, $releaseYear, $shortDescription, $price, intval($windows), intval($mac), intval($linux), $posterId, intval($developer), $id, $metacritic);
+        $this->game = Game::create($name, $releaseYear, $shortDescription, $price, ($windows), ($mac), ($linux), $posterId, intval($developer), $id, $metacritic);
+        $this->game->save();
         foreach ($genres as $genre) {
-            $this->getGame()->assignGenre($genre->getId());
+            $this->getGame()->assignGenre(intval($genre));
         }
         foreach ($categories as $category) {
-            $this->getGame()->assignCategory($category->getId());
+            $this->getGame()->assignCategory(intval($category));
         }
 
     }
@@ -236,9 +237,6 @@ class GameForm
         if (empty($_POST["name"])) {
             throw new ParameterException();
         }
-        if (!empty($_POST["posterId"]) || !ctype_digit($_POST["posterId"])) {
-            throw new ParameterException();
-        }
         if (empty($_POST["releaseYear"]) || !ctype_digit($_POST["releaseYear"])) {
             throw new ParameterException();
         }
@@ -246,9 +244,6 @@ class GameForm
             throw new ParameterException();
         }
         if (empty($_POST["price"]) || !ctype_digit($_POST["price"])) {
-            throw new ParameterException();
-        }
-        if (empty($_POST["poster"])) {
             throw new ParameterException();
         }
         if (empty($_POST["windows"]) || !ctype_digit($_POST["windows"])) {
