@@ -1,4 +1,5 @@
 <?php
+
 // Albin Blachon
 
 declare(strict_types=1);
@@ -49,9 +50,20 @@ class Poster
         $stmt->bindValue(':id', $id);
         $stmt->setFetchMode(PDO::FETCH_CLASS, Poster::class);
         $stmt-> execute();
-        if(($resp = $stmt->fetch()) === false){
+        if (($resp = $stmt->fetch()) === false) {
             throw new EntityNotFoundException();
         }
         return $resp;
+    }
+
+    /** Create a new Poster.
+     *
+     * @param string $jpeg The url of the poster.
+     * @param int|null $id The id of poster. By default, this is null.
+     * @return Poster The poster created.
+     */
+    public static function create(string $jpeg, ?int $id = null): Poster
+    {
+        return new Poster($jpeg, $id);
     }
 }
