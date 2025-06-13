@@ -31,6 +31,23 @@ class Poster
         return $this->id;
     }
 
+    /**
+     * @param int|null $id
+     */
+    public function setId(?int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $jpeg
+     */
+    public function setJpeg(string $jpeg): void
+    {
+        $this->jpeg = $jpeg;
+    }
+
+
     /** Search the poster by his id.
      *
      * @param int $id The poster id.
@@ -56,18 +73,16 @@ class Poster
         return $resp;
     }
 
-    /** Constructor of Poster class.
+    /** Constructor is null because it lead the code to some errors.
      *
-     * @param string $jpeg The url of the poster.
-     * @param int|null $id The id of the poster. It can be null or an int.
-     * @return void
      */
-    private function __construct(string $jpeg, ?int $id)
+    private function __construct()
     {
-        $this->id = $id;
-        $this->jpeg = $jpeg;
+
     }
+
     /** Create a new Poster.
+     * Use an empty constructor and setters to set attributes.
      *
      * @param string $jpeg The url of the poster.
      * @param int|null $id The id of poster. By default, this is null.
@@ -75,7 +90,11 @@ class Poster
      */
     public static function create(string $jpeg, ?int $id = null): Poster
     {
-        return new Poster($jpeg, $id);
+        $poster = new Poster();
+        $poster->setId($id);
+        $poster->setJpeg($jpeg);
+
+        return $poster;
     }
 
     /** Insert the poster into the database.
