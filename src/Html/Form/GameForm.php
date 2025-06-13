@@ -176,7 +176,7 @@ class GameForm
      * @return void
      * @throws ParameterException If a wrong parameter is given
      */
-    public function saveGameFromQueryString()
+    public function saveGameFromQueryString(): void
     {
         $id = null;
         if (!empty($_POST["id"]) && ctype_digit($_POST["id"])) {
@@ -200,8 +200,13 @@ class GameForm
         // if there is a poster Id define it.
         $posterId = !empty($_POST["posterId"]) && ctype_digit($_POST["posterId"]) ? intval($_POST["posterId"]) : null;
 
-        if (isset($_POST["poster"])) {
-            $poster = Poster::create($_POST["poster"]);
+        if (!empty($_POST["poster"])) {
+            $image = imagecreatefromstring(base64_decode($_POST["poster"]));
+            ob_start();
+            imagejpeg($image);
+            $stringdata = ob_get_contents();
+            ob_end_clean();
+            $poster = Poster::create($stringdata);
             $poster->save();
             $posterId = $poster->getId();
         } elseif ($posterId == null) {
