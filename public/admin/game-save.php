@@ -14,5 +14,7 @@ try {
     http_response_code(404);
 } catch (ParameterException) {
     http_response_code(400);
+} catch (Exception) {
+    http_response_code(500);
 }
 header("Location: /");
