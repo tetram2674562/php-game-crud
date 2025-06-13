@@ -12,7 +12,7 @@ use PDO;
 class Poster
 {
     private int $id;
-    private ?string $jpeg;
+    private string $jpeg;
 
     /**
      * @return string The jpeg data.
