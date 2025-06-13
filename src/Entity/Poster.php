@@ -123,4 +123,23 @@ class Poster
 
         return $this;
     }
+
+    /** Choose between the insert or update method.
+     * If id is null, we choose to insert the poster, else we choose to update the poster.
+     *
+     * @return $this The current instance
+     */
+    public function save(): Poster
+    {
+        // If id is null
+        if ($this->getId() === null) {
+            // Then insert
+            $this->insert();
+        } else {
+            // Else update
+            $this->update();
+        }
+
+        return $this;
+    }
 }
