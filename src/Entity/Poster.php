@@ -77,4 +77,28 @@ class Poster
     {
         return new Poster($jpeg, $id);
     }
+
+    /** Insert the poster into the database.
+     * Set the id of the current instance.
+     *
+     * @return $this The current instance.
+     */
+    public function insert(): Poster
+    {
+        // Insert the poster into the database
+        $addDataBase = MyPdo::getInstance()->prepare(
+            <<<SQL
+            INSERT INTO poster (jpeg)
+            VALUES (:jpeg)
+            SQL
+        );
+        $addDataBase->bindValue(":jpeg", $this->getJpeg());
+        $addDataBase->execute();
+
+        // Set the instance id
+        $id = MyPdo::getInstance()->lastInsertId("id");
+        $this->id = intval($id);
+
+        return $this;
+    }
 }
