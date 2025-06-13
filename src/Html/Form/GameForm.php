@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Html\Form;
 
+use Entity\Category;
 use Entity\Collection\CategoryCollection;
 use Entity\Collection\DeveloperCollection;
 use Entity\Collection\GenreCollection;
 use Entity\Developer;
 use Entity\Game;
+use Entity\Genre;
+use Entity\Poster;
 use Exception\EntityNotFoundException;
+use Exception\ParameterException;
 use Html\StringEscaper;
 
 class GameForm
@@ -17,7 +21,9 @@ class GameForm
     use StringEscaper;
 
     private ?Game $game;
-
+    private array $genres = [];
+    private array $categories = [];
+    private string $posterData;
     /** Create a new form
      *
      * @param Game|null $game A game (or null if there is no game).
@@ -36,6 +42,11 @@ class GameForm
         return $this->game;
     }
 
+    /** Produce the output HTML of the form.
+     *
+     * @param string $action The page to send data to
+     * @return string The HTML
+     */
     public function toHTML(string $action): string
     {
         $developer = null;
@@ -47,7 +58,15 @@ class GameForm
 
         }
 
-
+        // We map the whole lists of genres and categories to get their names.
+        if ($this->getGame() != null) {
+            $genres = array_map(function (Genre $genre) {
+                return $genre->getDescription();
+            }, $this->getGame()?->getAssignedGenres());
+            $categories = array_map(function (Category $cat) {
+                return $cat->getDescription();
+            }, $this->getGame()?->getAssignedCategories());
+        }
         $form = <<< HTML
         <!doctype html>
         <html lang="fr">
@@ -113,23 +132,32 @@ class GameForm
         $selected = $developer == null ? "selected='selected'" : "";
         $form .= "\t\t\tDeveloper <select name='developer'>\n\t\t\t\t<option value='' {$selected}></option>";
         foreach (DeveloperCollection::findAll() as $developers) {
+            // If the developer of the game is the developer that is about to be append to the page add the selected keyword.
             $selected = $developer?->getName() == $developers->getName() ? "selected='selected'" : "";
-            $form .= "\t\t\t\t<option value='{$this->escapeString($developers->getName())}' {$selected}>{$this->escapeString($developers->getName())}</option>\n";
+            $form .= "\t\t\t\t<option value='{$developers->getId()}' {$selected}>{$this->escapeString($developers->getName())}</option>\n";
         }
 
         $form .= "\t\t\t</select>\n\t\t\t<div class='categories_select'>Categories";
         foreach (CategoryCollection::findAll() as $category) {
+            $checked = "";
+            if (isset($categories)) {
+                $checked = in_array($category->getDescription(), $categories) ? "checked" : "" ;
+            }
             $form .= <<< HTML
                     <label>
-                        <input type="checkbox" name="categories[]" value="{$this->escapeString($category->getDescription())}"> {$this->escapeString($category->getDescription())}
+                        <input type="checkbox" name="categories[]" {$checked} value="{$this->escapeString($category->getDescription())}"> {$this->escapeString($category->getDescription())}
                     </label>
             HTML;
         }
         $form .= "\t\t\t</div>\n\t\t\t<div class='genres_select'>Genres";
         foreach (GenreCollection::findAll() as $genre) {
+            $checked = "";
+            if (isset($genres)) {
+                $checked = in_array($genre->getDescription(), $genres) ? "checked" : "";
+            }
             $form .= <<< HTML
                     <label>
-                        <input type="checkbox" name="genres[]" value="{$this->escapeString($genre->getDescription())}"> {$this->escapeString($genre->getDescription())}
+                        <input type="checkbox" name="genres[]" {$checked} value="{$this->escapeString($genre->getDescription())}"> {$this->escapeString($genre->getDescription())}
                     </label>
             HTML;
         }
