@@ -24,9 +24,9 @@ class Poster
     }
 
     /**
-     * @return int The id.
+     * @return ?int The id.
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
