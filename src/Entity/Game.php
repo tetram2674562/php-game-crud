@@ -317,7 +317,7 @@ class Game
      *
      * @return int id of the game
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -389,16 +389,11 @@ class Game
         $stmt = MyPdo::getInstance()->prepare(
             <<< 'SQL'
                 UPDATE game
-                SET name = :name
-                SET releaseYear = :releaseYear
-                SET shortDescription = :shortDescription
-                SET price = :price
-                SET windows = :windows
-                SET mac = :mac
-                SET linux = :linux
-                SET metacritic = :metacritic
-                SET developerId = :developerId
-                SET posterId = :posterId
+                SET name = :name, releaseYear = :releaseYear, 
+                    shortDescription = :shortDescription, price = :price,
+                    windows = :windows, mac = :mac,
+                    linux = :linux, metacritic = :metacritic,
+                    developerId = :developerId, posterId = :posterId
                 WHERE id = :id
             SQL
         );
@@ -424,8 +419,9 @@ class Game
      */
     public function assignCategory(int $categoryId): void
     {
+        // Insert ignore to don't care about duplicate key.
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
-            INSERT INTO game_category(gameId,categoryId) VALUES (:gameId,:categoryId)
+            INSERT IGNORE INTO game_category(gameId,categoryId) VALUES (:gameId,:categoryId)
         SQL);
         $id = $this->getId();
         $stmt->bindParam(":gameId", $id);
@@ -441,13 +437,14 @@ class Game
      */
     public function assignGenre(int $genreId): void
     {
+        // Insert ignore to don't care about duplicate key.
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
-            INSERT INTO game_genre(gameId,genreId) VALUES (:gameId,:genreId)
+            INSERT IGNORE INTO game_genre(gameId,genreId) VALUES (:gameId,:genreId) 
         SQL);
 
         $id = $this->getId();
         $stmt->bindParam(":gameId", $id);
-        $stmt->bindParam(":categoryId", $genreId);
+        $stmt->bindParam(":genreId", $genreId);
         $stmt->execute();
     }
 
