@@ -141,6 +141,17 @@ main{
     align-items: center;
 }
 
+/* Menu style */
+
+.menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#add_button, #home_button{
+    border: unset;
+}
 /* Mobile styles */
 @media screen and (min-width: 749px) {
 
